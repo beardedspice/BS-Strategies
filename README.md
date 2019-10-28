@@ -1,4 +1,4 @@
-# Unsupported Strategies
+# Unsupported BeardedSpice Strategies
 
 Since adding new ones or updating strategies in the release requires a comprehensive check, which sometimes cannot be performed due to technical reasons (for example, a paid account or the country in which the site does not work), we cannot fully satisfy the desire of a users to expand supported sites. 
 
