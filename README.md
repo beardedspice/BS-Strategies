@@ -11,3 +11,11 @@ These files were provided by contributors and placed without a full check of the
 This folder contains unsupported strategies in form of a `bsstrategy` files. Download the desirable file or all repository (through `Clone or download` green button), and import what you want into BeardedSpice. 
 
 File type `bsstrategy` can be imported to BeadredSpice by double click on it, simply.
+
+## To Contribute
+
+You can easily add a file with the BeardedSpice strategy to this repository using standard pull-request practice. The file will be merged with minimal checks: duplicates, a suitable name, an increase in the version number.
+
+A `bsstrategy` file is a plain text file that contains `javascript` code describing BeardedSpice strategy for a particular site.
+
+The **[Developer How-To Guide](docs/developers-guide-web.md)** has the information how to create (or update) strategy, especially **[Writing a Media Strategy](https://github.com/beardedspice/beardedspice/blob/master/docs/developers-guide-web.md#writing-a-media-strategy)**  section.
