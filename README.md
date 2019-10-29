@@ -21,3 +21,7 @@ A `bsstrategy` file is a plain text file that contains `javascript` code describ
 For example, you can export strategy from the BeardedSpice app, and use it as a template for making changes or creating a new one (in the `Preferences...` , section `Controllers`, `Export...` button).
 
 The **[Developer How-To Guide](docs/developers-guide-web.md)** has the information how to create (or update) strategy, especially **[Writing a Media Strategy](https://github.com/beardedspice/beardedspice/blob/master/docs/developers-guide-web.md#writing-a-media-strategy)**  section.
+
+## Main Repository
+
+**[BeardedSpice Application Repository](https://github.com/beardedspice/beardedspice)**
