@@ -8,6 +8,6 @@ These files were provided by contributors and placed without a full check of the
 
 ## Usage
 
-This folder contains unsupported strategies in form of a `bsstrategy` files. Download the desirable file and import it into BeardedSpice. 
+This folder contains unsupported strategies in form of a `bsstrategy` files. Download the desirable file or all repository (through `Clone or download` green button), and import what you want into BeardedSpice. 
 
 File type `bsstrategy` can be imported to BeadredSpice by double click on it, simply.
