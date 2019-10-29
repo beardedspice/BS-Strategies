@@ -24,4 +24,4 @@ The **[Developer How-To Guide](docs/developers-guide-web.md)** has the informati
 
 ## Main Repository
 
-**[BeardedSpice Application Repository](https://github.com/beardedspice/beardedspice)**
+**[BeardedSpice application repository](https://github.com/beardedspice/beardedspice)**
