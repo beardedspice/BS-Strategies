@@ -8,7 +8,7 @@ These files were provided by contributors and placed without a full check of the
 
 ## Usage
 
-This folder contains unsupported strategies in form of a `bsstrategy` files. Download the desirable file or all repository (using `Clone or download` green button), and import what you want into BeardedSpice. 
+This folder contains unsupported strategies in form of a `bsstrategy` files. Download the desirable file or all repository (using _"Clone or download"_ green button), and import what you want into BeardedSpice. 
 
 File type `bsstrategy` can be imported to BeadredSpice by double click on it, simply.
 
@@ -18,7 +18,7 @@ You can easily add a file with the BeardedSpice strategy to this repository usin
 
 A `bsstrategy` file is a plain text file that contains `javascript` code describing BeardedSpice strategy for a particular site.
 
-For example, you can export strategy from the BeardedSpice app, and use it as a template for making changes or creating a new one (in the `Preferences...` , section `Controllers`, `Export...` button).
+For example, you can export strategy from the BeardedSpice app, and use it as a template for making changes or creating a new one (in the _"Preferences..."_ , section _"Controllers"_, _"Export..."_ button).
 
 The **[Developer How-To Guide](docs/developers-guide-web.md)** has the information how to create (or update) strategy, especially **[Writing a Media Strategy](https://github.com/beardedspice/beardedspice/blob/master/docs/developers-guide-web.md#writing-a-media-strategy)**  section.
 
