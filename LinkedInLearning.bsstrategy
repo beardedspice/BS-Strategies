@@ -1,0 +1,57 @@
+//
+//  LinkedInLearning.plist
+//  BeardedSpice
+//
+//  Created by Michele Vetturi on 05/07/20.
+//  Copyright (c) 2020 GPL v3 http://www.gnu.org/licenses/gpl.html
+//
+BSStrategy = {
+  version: 1,
+  displayName: "LinkedIn Learning",
+  accepts: {
+    method: "predicateOnTab",
+    format: "%K LIKE[c] '*linkedin.com/learning/*'",
+    args: ["URL"]
+  },
+  pause: function () {
+    let pause = $('BUTTON[type="button"][title="Pause"]').get(0);
+    $(pause).click();
+  },
+  isPlaying: function () {
+    return $('BUTTON[type="button"][title="Pause"]').length === 1
+  },
+  toggle: function () {
+    if ($('BUTTON[type="button"][title="Play"]:visible').length) {
+      let play = $('BUTTON[type="button"][title="Play"]').get(0);
+      $(play).click();
+    } else {
+      let pause = $('BUTTON[type="button"][title="Pause"]').get(0);
+      $(pause).click();
+    }
+  },
+  previous: function () {
+    let prev = $('BUTTON[type="button"][title="Previous"]').get(0);
+    $(prev).click();
+  },
+  next: function () {
+    let next = $('BUTTON[type="button"][title="Next"]').get(0);
+    $(next).click();
+  },
+  favorite: function () {
+    let like = $('BUTTON[type="button"][data-control-name="toggle_like"]').get(0);
+    $(like).click();
+  },
+  trackInfo: function () {
+    var course = document.querySelector('#ember1903 h1').textContent.trim();
+    var track = document.querySelector('#ember1903 h2').textContent.trim();
+    let like = $('BUTTON[type="button"][data-control-name="toggle_like"]').get(0);
+
+    return {
+      'album': course,
+      'track': track,
+      'favorited': like.getAttribute('aria-pressed')
+    };
+  }
+}
+// The file must have an empty line at the end.
+
