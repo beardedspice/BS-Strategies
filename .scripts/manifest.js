@@ -11,7 +11,7 @@ try {
     fs.readdirSync(BASEPATH).forEach(el => {
         if (path.extname(el) == STRATEGY_EXT) {
             try {
-                let stg = fs.readFileSync(el, 'utf8');
+                let stg = fs.readFileSync(BASEPATH+el, 'utf8');
                 const obj = eval(stg);
                 out[path.basename(el, STRATEGY_EXT)] = {'version': obj.version, 'name': obj.displayName};
             } catch (error) {
