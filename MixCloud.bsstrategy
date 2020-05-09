@@ -24,6 +24,7 @@ BSStrategy = {
       'track': document.querySelector('p[class*="RebrandPlayerControls__ShowTitle-"]').textContent,
       'artist': document.querySelector('span[class*="RebrandPlayerControls__ShowOwnerName-"]').textContent,
       'image' : document.querySelector('div[class*="RebrandPlayerControls__ShowPicture-"]>img').currentSrc,
+      'progress': document.querySelector('div[class*="RebrandPlayerSliderComponent__StartTime-"]').textContent + '( remains ' + document.querySelector('div[class*="RebrandPlayerSliderComponent__EndTime-"]').textContent + ')',
       'favorited': (document.querySelector('span[class*="RebrandPlayerActionsFavoriteButton__PlayerFavoriteIcon-"]').getAttribute('data-tooltip') == "Undo Favorite")
     };
   }
