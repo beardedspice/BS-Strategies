@@ -1,0 +1,41 @@
+//
+//  Flat.fm
+//  BeardedSpice
+//
+//  Created by Roman Sokolov.
+//  Copyright (c) 2015-2020 GPL v3 http://www.gnu.org/licenses/gpl.html
+//
+BSStrategy = {
+  version:1,
+  displayName:"Flat.FM",
+  accepts: {
+    method: "predicateOnTab",
+    format:"%K LIKE[c] '*/flat.fm/*'",
+    args: ["URL"]
+  },
+  isPlaying: function() {return (document.querySelector('svg#topbarPlayerButtons>use').href.baseVal == "#icon-playback-topbar-playing")},
+  pause: function () { if (document.querySelector('svg#topbarPlayerButtons>use').href.baseVal == "#icon-playback-topbar-playing") document.querySelector('div.player__button_stream-center').click(); },
+  toggle: function () { document.querySelector('div.player__button_stream-center').click(); },
+  next: function() {document.querySelector('div.player__button_stream-other-right').click()},
+  previous: function() {document.querySelector('div.player__button_stream-other-left').click()},
+  trackInfo: function () {
+      let result = {
+      'track': document.querySelector('div.mix-shortcut-time__topbar__title>span:nth-child(2)').textContent,
+      'artist': document.querySelector('div.mix-shortcut-time__topbar__title>span:nth-child(1)').textContent,
+      'progress': document.querySelector('div.mix-shortcut-time__topbar__current').textContent + ' of ' + document.querySelector('div.mix-shortcut-time__topbar__estimated').textContent
+    };
+
+      let bgImage = document.querySelector('div.player__controls_playlist-current').style.backgroundImage;
+      if (bgImage) {
+          try {
+              bgImage = /url\(\"(.+)\"\)/.exec(bgImage)[1];
+              if (bgImage.length > 0) {
+                  result['image'] = bgImage;
+              }
+          }
+          catch (error) {
+          }
+      }
+      return result;
+  }
+}
