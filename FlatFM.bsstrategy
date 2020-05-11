@@ -55,7 +55,8 @@ BSStrategy = {
           try {
               bgImage = /url\(\"(.+)\"\)/.exec(bgImage)[1];
               if (bgImage.length > 0) {
-                  result['image'] = bgImage;
+                  let url = new URL( bgImage, document.baseURI)
+                  result['image'] = url.href;
               }
           }
           catch (error) {
