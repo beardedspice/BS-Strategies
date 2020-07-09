@@ -1,0 +1,28 @@
+//
+//  PocketCasts.plist
+//  BeardedSpice
+//
+//  Created by Dmytro Piliugin on 1/23/15.
+//  Modified by Roman Sokolov on 7/9/20
+//  Copyright (c) 2015-2017 GPL v3 http://www.gnu.org/licenses/gpl.html
+//
+BSStrategy = {
+  version:2,
+  displayName:"PocketCasts",
+  accepts: {
+    method: "predicateOnTab",
+    format:"%K LIKE[c] '*play.pocketcasts.com*'",
+    args: ["URL"]
+  },
+  toggle: function () {document.querySelector('button.play_pause_button').click()},
+  next: function () {document.querySelector('button.skip_forward_button').click()},
+  previous: function () {document.querySelector('button.skip_back_button').click()},
+  pause: function () {document.querySelector('button.pause_button').click()},
+  trackInfo: function () {
+    return {
+      'track': document.querySelector('div.controls-center div.player_episode').innerText,
+      'album': document.querySelector('div.controls-center div.player_podcast_title').innerText,
+      'image': document.querySelector('button.player-image img').src,
+    };
+  }
+}
