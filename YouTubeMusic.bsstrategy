@@ -3,11 +3,12 @@
 //  BeardedSpice
 //
 //  Created by Vladislav Gapurov on 07/28/18
+//  Updated by Ignat Remizov on 07/25/20
 //  Copyright (c) 2013 Tyler Rhodes / Jose Falcon. All rights reserved.
 //
 
 BSStrategy = {
-  version: 1,
+  version: 2,
   displayName: "YouTube Music",
   accepts: {
     method: "predicateOnTab",
@@ -15,14 +16,10 @@ BSStrategy = {
     args: ["URL"],
   },
   isPlaying: function() { return !document.querySelector('#movie_player video').paused; },
-  toggle: function() { document.querySelector('.ytmusic-player-bar.play-pause-button').click(); },
+  toggle: function() { document.querySelector('#play-pause-button').click(); },
   previous: function() { document.querySelector('.ytmusic-player-bar.previous-button').click(); },
   next: function() { document.querySelector('.ytmusic-player-bar.next-button').click(); },
-  pause: function() {
-    if(!document.querySelector('#movie_player video').paused) {
-      document.querySelector('.ytmusic-player-bar.play-pause-button').click();
-    }
-  },
+  pause: function() { document.querySelector('#movie_player').pauseVideo(); },
   favorite: function() {
     document.querySelector('ytmusic-like-button-renderer .ytmusic-like-button-renderer.like').click()
   },
@@ -30,14 +27,14 @@ BSStrategy = {
     timeInfo = document.querySelector('.ytmusic-player-bar.time-info').innerHTML.split('/');
     thumb = document.querySelector('.ytmusic-player-bar img');
     title = document.querySelector('.ytmusic-player-bar.title');
-    byline = document.querySelector('.byline.ytmusic-player-bar');
+    byline = document.querySelector('.byline.ytmusic-player-bar').title.split(' \u2022 ');
     like = document.querySelector('ytmusic-like-button-renderer');
 
     return {
       'image': thumb.src,
-      'track': title.text.runs[0].text,
-      'artist': Array.from(byline.children)
-        .reduce((acc, curr, i) => i === 0 ? curr.text : `${acc}, ${curr.text}`, '' ),
+      'track': title.title,
+      'artist': byline[0],
+      'album': `${byline[1]} (${byline[2]})`,
       'progress': `${timeInfo[0].trim()} of ${timeInfo[1].trim()}`,
       'favorited': like.getAttribute('like-status') === 'LIKE',
     };
