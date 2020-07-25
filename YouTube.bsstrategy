@@ -6,16 +6,17 @@
 //  Updated by Alin Panaitiu on 3/2/18.
 //  Updated by Vladislav Gapurov on 07/28/18
 //  Updated by Andreas Willi on 02/24/19
+//  Updated by Ignat Remizov on 07/25/20
 //  Copyright (c) 2013 Tyler Rhodes / Jose Falcon. All rights reserved.
 //
 
 BSStrategy = {
-  version: 4,
+  version: 5,
   displayName: "YouTube",
   accepts: {
     method: "predicateOnTab",
-    format: "%K LIKE[c] '*youtube.com/watch*' && !%@ LIKE[c] '*music.youtube.com*'",
-    args: ["URL", "URL"]
+    format: "%K LIKE[c] '*youtube.com/watch*'",
+    args: ["URL"]
   },
   isPlaying: function () { return !document.querySelector('#movie_player video').paused; },
   toggle: function () { document.querySelector('#movie_player .ytp-play-button').click(); },
@@ -25,11 +26,7 @@ BSStrategy = {
   favorite: function () { document.querySelector('ytd-toggle-button-renderer').click(); },
   trackInfo: function () {
     function pad(number) {
-      if (number < 10) {
-        return `0${number}`;
-      } else {
-        return number.toString();
-      }
+      return number < 10 ? `0${number}` : `${number}`;
     };
 
     function secondsToTimeString(seconds) {
@@ -45,9 +42,9 @@ BSStrategy = {
     };
 
     playerManager = document.querySelector('yt-player-manager');
-    player = playerManager.player_;
-    videoData = player.getVideoData();
+    player = playerManager.player_ || document.querySelector('#movie_player');
 
+    videoData = player.getVideoData();
     progress = player.getProgressState();
     played = secondsToTimeString(progress.current);
     duration = secondsToTimeString(progress.duration);
