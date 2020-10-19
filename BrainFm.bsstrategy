@@ -7,7 +7,7 @@
 //
 
 BSStrategy = {
-  version: 1,
+  version: 2,
   displayName: "Brain.fm",
   accepts: {
     method: "predicateOnTab",
