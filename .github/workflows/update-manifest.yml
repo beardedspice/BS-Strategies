@@ -1,4 +1,4 @@
-name: Update manifest.js
+name: Update manifest.json
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Building manifest.js
+    name: Building manifest.json
     runs-on: macos-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
     - run: node .scripts/manifest.js
     - name: Commit files
       run: |
-        git commit -m "skipci: Updated manifest.js" -a || exit 0
+        git commit -m "skipci: Updated manifest.json" -a || exit 0
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
