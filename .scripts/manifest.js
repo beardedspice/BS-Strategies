@@ -20,6 +20,7 @@ try {
         }
     });    
     fs.writeFileSync(MANIFEST,JSON.stringify(out));
+    console.log('manifest.js updated');
 } catch (error) {
     console.error(error)
 }
