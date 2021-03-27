@@ -1,0 +1,28 @@
+name: "Release unsupported strategies"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  release:
+    name: "Release"
+    runs-on: "macos-latest"
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Build"
+        run: |
+          zip UnsupportedStrategies.zip *.bsstrategy
+          echo "done!"
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          title: "Latest Release"
+          files: |
+            LICENSE.txt
+            UnsupportedStrategies.zip
