@@ -1,0 +1,19 @@
+
+name: Update manifest.js
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Building manifest.js
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - run: node .scripts/manifest.js
