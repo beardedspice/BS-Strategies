@@ -5,36 +5,97 @@
 //  Created by James Greenleaf on 03/05/16.
 //  Copyright (c) 2013 Tyler Rhodes / Jose Falcon. All rights reserved.
 //
+//  Updated by:
+//  - V2: Andy Chong on 19 Oct 2020.
+//  - V3: Andy Chong on 26 Nov 2021.
+//
 
 BSStrategy = {
-  version: 2,
+  version: 3,
   displayName: "Brain.fm",
   accepts: {
     method: "predicateOnTab",
-    format: "%K LIKE[c] '*brain.fm/app*'",
+    format: "%K LIKE[c] '*brain.fm/*'",
     args: ["URL"],
   },
   isPlaying: function () {
-    return document.querySelector("[class^='PlayControl__pause']") !== null;
+    const element = document.querySelector(
+      "[class^='playerControl__ControlButtons']",
+    );
+
+    if (
+      element &&
+      element.firstElementChild &&
+      element.firstElementChild.firstElementChild
+    ) {
+      return !element.firstElementChild.firstElementChild.alt.match(/play/i);
+    }
   },
   toggle: function () {
-    document.querySelector("[class^='PlayControl__']").click();
+    const element = document.querySelector(
+      "[class^='playerControl__ControlButtons']",
+    );
+
+    if (element && element.firstElementChild) {
+      element.firstElementChild.click();
+    }
   },
   previous: function () {},
   next: function () {
-    return document.querySelector("[class^='Skip__skip']").click();
-  },
-  pause: function () {
-    var p = document.querySelector("[class^='PlayControl__']");
-    if (document.querySelector("[class^='PlayControl__pause']") !== null) {
-      p.click();
+    const element = document.querySelector(
+      "[class^='playerControl__ControlButtons']",
+    );
+
+    if (element && element.lastElementChild) {
+      element.lastElementChild.click();
     }
   },
-  favorite: function () {},
+  pause: function () {
+    const element = document.querySelector(
+      "[class^='playerControl__ControlButtons']",
+    );
+
+    if (element && element.firstElementChild) {
+      element.firstElementChild.click();
+    }
+  },
+  favorite: function () {
+    const element = document.querySelector("[class*='AddToFavoritesButton']");
+    if (element) {
+      element.click();
+    }
+  },
   trackInfo: function () {
-    return {
-      track: document.querySelectorAll("[class^='Controls__brainState']")[1]
-        .textContent,
+    const art = document.querySelector(
+      "[class^='TrackInformationCardstyles__Image']",
+    );
+    const title = document.querySelector(
+      "[class^='TrackInformationCardstyles__Title']",
+    );
+    const track = document.querySelector(
+      "[class^='TrackInformationCardstyles__Subtitle']",
+    );
+    const activity = document.querySelector(
+      "[class^='ActivitySelectorstyles__Text']",
+    );
+
+    let favorited = false;
+    const favoriteBtn = document.querySelector(
+      "[class*='AddToFavoritesButton']",
+    );
+    if (favoriteBtn && favoriteBtn.firstElementChild) {
+      favorited =
+        favoriteBtn.firstElementChild.getAttribute("fill-opacity") === "1";
+    }
+
+    const info = {
+      image: art ? art.getAttribute("src") : null,
+      track: track ? track.innerText : null,
+      album: title ? title.innerText : null,
+      artist: activity ? activity.innerText : null,
+      favorited: favorited,
     };
+
+    return info;
   },
 };
