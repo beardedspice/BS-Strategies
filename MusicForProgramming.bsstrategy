@@ -6,32 +6,58 @@
 //  Copyright (c) 2015 Tyler Rhodes / Jose Falcon. All rights reserved.
 //
 // strategy/site notes
-// - favorite, not implemented on this site
 // - single sets are long, so next/prev implements the site's forward/rewind on the set
 // - track info consists only of the set number and name, no artist or artwork
+// - if tab is newly loaded, toggle will not start playback. Playback must have been started already to be able to toggle.
 BSStrategy = {
-  version:1,
-  displayName:"MusicForProgramming",
+  version: 2,
+  displayName: "MusicForProgramming",
   accepts: {
     method: "predicateOnTab",
-    format:"%K LIKE[c] '*musicforprogramming.net/*'",
-    args: ["URL"]
+    format: "%K LIKE[c] '*musicforprogramming.net/*'",
+    args: ["URL"],
   },
-  isPlaying: function () {return ( (document.querySelector('.playerControls #player_playpause').innerText === '[PAUSE]'));},
-  toggle: function () {document.querySelector('.playerControls #player_playpause').click();},
-  next: function () {document.querySelector('.playerControls #player_ffw').click()},
-  favorite: function () {},
-  previous: function () {document.querySelector('.playerControls #player_rew').click()},
-  pause:function () {
-    var playPause=document.querySelector('.playerControls #player_playpause');
-    if(playPause && playPause.innerText === '[PAUSE]'){
-        playPause.click();
-    }
+  matches: [],
+  findElement: function (regex, tag) {
+    var elements = document.querySelectorAll(`nav ${tag}`);
+    if (!elements) return;
+    this.matches = Array.prototype.filter.call(elements, function (element) {
+      return RegExp(regex).test(element.textContent);
+    });
+    return this;
+  },
+  clickElement: function () {
+    const { matches } = this;
+    if (matches === undefined) return;
+    if (matches.length === 0) return;
+    matches[0].click();
+    return this;
+  },
+  isFound: function () {
+    return this.matches.length > 0;
+  },
+  isPlaying: function () {
+    return BSStrategy.findElement("stop", "button").isFound();
+  },
+  toggle: function () {
+    BSStrategy.findElement("(play|stop)", "> span").clickElement();
+  },
+  next: function () {
+    BSStrategy.findElement("next", "button").clickElement();
+  },
+  favorite: function () {
+    BSStrategy.findElement("favourite", "> span").clickElement();
+  },
+  previous: function () {
+    BSStrategy.findElement("prev", "button").clickElement();
+  },
+  pause: function () {
+    BSStrategy.findElement("stop", "button").clickElement();
   },
   trackInfo: function () {
-    var track=document.querySelector('.selected');
+    var track = document.querySelector("#content .title");
     return {
-        'track': track ? track.innerText : ''
-    }
-  }
-}
+      track: track ? track.innerText : "",
+    };
+  },
+};
