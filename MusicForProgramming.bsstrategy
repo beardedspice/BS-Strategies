@@ -6,32 +6,56 @@
 //  Copyright (c) 2015 Tyler Rhodes / Jose Falcon. All rights reserved.
 //
 // strategy/site notes
-// - favorite, not implemented on this site
 // - single sets are long, so next/prev implements the site's forward/rewind on the set
 // - track info consists only of the set number and name, no artist or artwork
 BSStrategy = {
-  version:1,
-  displayName:"MusicForProgramming",
+  version: 2,
+  displayName: "MusicForProgramming",
   accepts: {
     method: "predicateOnTab",
-    format:"%K LIKE[c] '*musicforprogramming.net/*'",
-    args: ["URL"]
+    format: "%K LIKE[c] '*musicforprogramming.net/*'",
+    args: ["URL"],
   },
-  isPlaying: function () {return ( (document.querySelector('.playerControls #player_playpause').innerText === '[PAUSE]'));},
-  toggle: function () {document.querySelector('.playerControls #player_playpause').click();},
-  next: function () {document.querySelector('.playerControls #player_ffw').click()},
-  favorite: function () {},
-  previous: function () {document.querySelector('.playerControls #player_rew').click()},
-  pause:function () {
-    var playPause=document.querySelector('.playerControls #player_playpause');
-    if(playPause && playPause.innerText === '[PAUSE]'){
-        playPause.click();
-    }
+  findButton: function (regex, tag) {
+    var elements = document.querySelectorAll(`nav ${tag}`);
+    if (!elements) return;
+    var matches = Array.prototype.filter.call(buttons, function (element) {
+      return RegExp(regex).test(element.textContent);
+    });
+    return matches;
+  },
+  isPlaying: function () {
+    return (BSStrategy.findButton("stop", "button").length > 0);
+  },
+  toggle: function () {
+    var button = BSStrategy.findButton("(play|stop)", "button");
+    if (!button) return;
+    button[0].click();
+  },
+  next: function () {
+    var button = BSStrategy.findButton("next", "button");
+    if (!button) return;
+    button[0].click();
+  },
+  favorite: function () {
+    var button = BSStrategy.findButton("favourite", "> span");
+    if (!button) return;
+    button[0].click();
+  },
+  previous: function () {
+    var button = BSStrategy.findButton("prev", "button");
+    if (!button) return;
+    button[0].click();
+  },
+  pause: function () {
+    var button = BSStrategy.findButton("stop", "button");
+    if (!button) return;
+    button[0].click();
   },
   trackInfo: function () {
-    var track=document.querySelector('.selected');
+    var track = document.querySelector("#content .title");
     return {
-        'track': track ? track.innerText : ''
-    }
-  }
-}
+      track: track ? track.innerText : "",
+    };
+  },
+};
