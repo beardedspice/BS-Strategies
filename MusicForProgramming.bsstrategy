@@ -16,41 +16,41 @@ BSStrategy = {
     format: "%K LIKE[c] '*musicforprogramming.net/*'",
     args: ["URL"],
   },
-  findButton: function (regex, tag) {
+  findElement: function (regex, tag) {
     var elements = document.querySelectorAll(`nav ${tag}`);
     if (!elements) return;
-    var matches = Array.prototype.filter.call(buttons, function (element) {
+    var matches = Array.prototype.filter.call(elements, function (element) {
       return RegExp(regex).test(element.textContent);
     });
     return matches;
   },
+  clickElement: function (elements) {
+    if (elements === undefined) return;
+    if (elements.length === 0) return;
+    elements[0].click();
+  },
   isPlaying: function () {
-    return (BSStrategy.findButton("stop", "button").length > 0);
+    return (BSStrategy.findElement("stop", "button").length > 0);
   },
   toggle: function () {
-    var button = BSStrategy.findButton("(play|stop)", "button");
-    if (!button) return;
-    button[0].click();
+    const button = BSStrategy.findElement("(play|stop)", "> span");
+    BSStrategy.clickElement(button);
   },
   next: function () {
-    var button = BSStrategy.findButton("next", "button");
-    if (!button) return;
-    button[0].click();
+    const button = BSStrategy.findElement("next", "button");
+    BSStrategy.clickElement(button);
   },
   favorite: function () {
-    var button = BSStrategy.findButton("favourite", "> span");
-    if (!button) return;
-    button[0].click();
+    const button = BSStrategy.findElement("favourite", "> span");
+    BSStrategy.clickElement(button);
   },
   previous: function () {
-    var button = BSStrategy.findButton("prev", "button");
-    if (!button) return;
-    button[0].click();
+    const button = BSStrategy.findElement("prev", "button");
+    BSStrategy.clickElement(button);
   },
   pause: function () {
-    var button = BSStrategy.findButton("stop", "button");
-    if (!button) return;
-    button[0].click();
+    const button = BSStrategy.findElement("stop", "button");
+    BSStrategy.clickElement(button);
   },
   trackInfo: function () {
     var track = document.querySelector("#content .title");
