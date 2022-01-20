@@ -8,6 +8,7 @@
 // strategy/site notes
 // - single sets are long, so next/prev implements the site's forward/rewind on the set
 // - track info consists only of the set number and name, no artist or artwork
+// - if tab is newly loaded, toggle will not start playback. Playback must have been started already to be able to toggle.
 BSStrategy = {
   version: 2,
   displayName: "MusicForProgramming",
@@ -16,41 +17,42 @@ BSStrategy = {
     format: "%K LIKE[c] '*musicforprogramming.net/*'",
     args: ["URL"],
   },
+  matches: [],
   findElement: function (regex, tag) {
     var elements = document.querySelectorAll(`nav ${tag}`);
     if (!elements) return;
-    var matches = Array.prototype.filter.call(elements, function (element) {
+    this.matches = Array.prototype.filter.call(elements, function (element) {
       return RegExp(regex).test(element.textContent);
     });
-    return matches;
+    return this;
   },
-  clickElement: function (elements) {
-    if (elements === undefined) return;
-    if (elements.length === 0) return;
-    elements[0].click();
+  clickElement: function () {
+    const { matches } = this;
+    if (matches === undefined) return;
+    if (matches.length === 0) return;
+    matches[0].click();
+    return this;
+  },
+  isFound: function () {
+    return this.matches.length > 0;
   },
   isPlaying: function () {
-    return (BSStrategy.findElement("stop", "button").length > 0);
+    return BSStrategy.findElement("stop", "button").isFound();
   },
   toggle: function () {
-    const button = BSStrategy.findElement("(play|stop)", "> span");
-    BSStrategy.clickElement(button);
+    BSStrategy.findElement("(play|stop)", "> span").clickElement();
   },
   next: function () {
-    const button = BSStrategy.findElement("next", "button");
-    BSStrategy.clickElement(button);
+    BSStrategy.findElement("next", "button").clickElement();
   },
   favorite: function () {
-    const button = BSStrategy.findElement("favourite", "> span");
-    BSStrategy.clickElement(button);
+    BSStrategy.findElement("favourite", "> span").clickElement();
   },
   previous: function () {
-    const button = BSStrategy.findElement("prev", "button");
-    BSStrategy.clickElement(button);
+    BSStrategy.findElement("prev", "button").clickElement();
   },
   pause: function () {
-    const button = BSStrategy.findElement("stop", "button");
-    BSStrategy.clickElement(button);
+    BSStrategy.findElement("stop", "button").clickElement();
   },
   trackInfo: function () {
     var track = document.querySelector("#content .title");
