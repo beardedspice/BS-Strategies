@@ -19,8 +19,8 @@ BSStrategy = {
   isPlaying: function () {document.querySelector('.play-pause-btn').title == 'Pause'},
   previous:  function () {document.querySelector('.skip-back-btn').click();},
   next:      function () {document.querySelector('.skip-forward-btn').click();},
-  pause:     function () {document.querySelector('.play-pause-btn').click();},
-  toggle:     function () {document.querySelector('.play-pause-btn').click();},
+  pause:     function () {if (document.querySelector('.play-pause-btn').title == 'Pause') document.querySelector('.play-pause-btn').click();},
+  toggle:    function () {document.querySelector('.play-pause-btn').click();},
 
   trackInfo: function () {
     return {
