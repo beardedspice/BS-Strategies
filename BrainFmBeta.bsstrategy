@@ -1,0 +1,93 @@
+//
+//  BrainFmBetaStrategy.m
+//  BeardedSpice
+//
+//  Created by Andy Chong on 6 Apr 2022.
+//  Copyright (c) 2022 Andy Chong. All rights reserved.
+//
+
+BSStrategy = {
+  version: 1,
+  displayName: "Brain.fm beta",
+  accepts: {
+    method: "predicateOnTab",
+    format: "%K LIKE[c] '*my.brain.fm/*'",
+    args: ["URL"],
+  },
+  isPlaying: function () {
+    
+    const element = document.querySelector(
+      "[src^='/static/media/pause_icon']",
+    );
+    return element !== null;
+  },
+  toggle: function () {
+    const pause = document.querySelector(
+      "[src^='/static/media/pause_icon']",
+    );
+    const play = document.querySelector(
+      "[src^='/static/media/play_icon']",
+    );
+    if(!!pause) {
+      pause.closest('button').click();
+    }else if(!!play) {
+      play.closest('button').click();
+    }
+  },
+  previous: function () {},
+  next: function () {
+    const element = document.querySelector(
+      "[src^='/static/media/skip_icon']",
+    );
+    element && element.closest('button').click();
+  },
+  pause: function () {
+    const isPlaying = document.querySelector(
+      "[src^='/static/media/pause_icon']",
+    ) !== null;
+
+    const element = document.querySelector(
+      "[src^='/static/media/pause_icon']",
+    );
+
+    isPlaying && element && element.click()
+  },
+  favorite: function () {
+    const element = document.querySelector(
+      "[data-testid='addToFavoritesButton']",
+    );
+
+    element && element.click()
+  },
+  trackInfo: function () {
+    const art = document.querySelector(
+      "[src^='https://images.unsplash.com/']",
+    );
+    let album, track;
+
+    if(art && art.nextSibling && art.nextSibling.children[0]) {
+      track = art.nextSibling.children[0].innerText;
+      
+      if(art.nextSibling.children[0].nextSibling) {
+        album = art.nextSibling.children[0].nextSibling.innerText;
+      }
+    }
+
+    let favorited = false;
+    const favoriteBtn = document.querySelector(
+      "[data-testid='addToFavoritesButton']",
+    );
+    if (favoriteBtn && favoriteBtn.firstElementChild) {
+      favorited =
+        favoriteBtn.firstElementChild.getAttribute("fill-opacity") === "1";
+    }
+
+    return {
+      image: art ? art.getAttribute("src") : "",
+      track: track ? track : "",
+      album: album ? album : "",
+      artist: "",
+      favorited: favorited,
+    };
+  },
+};
