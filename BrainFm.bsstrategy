@@ -4,98 +4,41 @@
 //
 //  Created by James Greenleaf on 03/05/16.
 //  Copyright (c) 2013 Tyler Rhodes / Jose Falcon. All rights reserved.
-//
 //  Updated by:
 //  - V2: Andy Chong on 19 Oct 2020.
 //  - V3: Andy Chong on 26 Nov 2021.
+//  - V4: Andy Chong on 6 Apr 2022.
 //
 
 BSStrategy = {
-  version: 3,
+  version: 4,
   displayName: "Brain.fm",
   accepts: {
     method: "predicateOnTab",
-    format: "%K LIKE[c] '*brain.fm/*'",
+    format: "%K LIKE[c] 'brain.fm/app/*'",
     args: ["URL"],
   },
   isPlaying: function () {
-    const element = document.querySelector(
-      "[class^='playerControl__ControlButtons']",
-    );
-
-    if (
-      element &&
-      element.firstElementChild &&
-      element.firstElementChild.firstElementChild
-    ) {
-      return !element.firstElementChild.firstElementChild.alt.match(/play/i);
-    }
+    return document.querySelector("[class^='PlayControl__pause']") !== null;
   },
   toggle: function () {
-    const element = document.querySelector(
-      "[class^='playerControl__ControlButtons']",
-    );
-
-    if (element && element.firstElementChild) {
-      element.firstElementChild.click();
-    }
+    document.querySelector("[class^='PlayControl__']").click();
   },
   previous: function () {},
   next: function () {
-    const element = document.querySelector(
-      "[class^='playerControl__ControlButtons']",
-    );
-
-    if (element && element.lastElementChild) {
-      element.lastElementChild.click();
-    }
+    return document.querySelector("[class^='Skip__skip']").click();
   },
   pause: function () {
-    const element = document.querySelector(
-      "[class^='playerControl__ControlButtons']",
-    );
-
-    if (element && element.firstElementChild) {
-      element.firstElementChild.click();
+    var p = document.querySelector("[class^='PlayControl__']");
+    if (document.querySelector("[class^='PlayControl__pause']") !== null) {
+      p.click();
     }
   },
-  favorite: function () {
-    const element = document.querySelector("[class*='AddToFavoritesButton']");
-    if (element) {
-      element.click();
-    }
-  },
+  favorite: function () {},
   trackInfo: function () {
-    const art = document.querySelector(
-      "[class^='TrackInformationCardstyles__Image']",
-    );
-    const title = document.querySelector(
-      "[class^='TrackInformationCardstyles__Title']",
-    );
-    const track = document.querySelector(
-      "[class^='TrackInformationCardstyles__Subtitle']",
-    );
-    const activity = document.querySelector(
-      "[class^='ActivitySelectorstyles__Text']",
-    );
-
-    let favorited = false;
-    const favoriteBtn = document.querySelector(
-      "[class*='AddToFavoritesButton']",
-    );
-    if (favoriteBtn && favoriteBtn.firstElementChild) {
-      favorited =
-        favoriteBtn.firstElementChild.getAttribute("fill-opacity") === "1";
-    }
-
-    const info = {
-      image: art ? art.getAttribute("src") : null,
-      track: track ? track.innerText : null,
-      album: title ? title.innerText : null,
-      artist: activity ? activity.innerText : null,
-      favorited: favorited,
+    return {
+      track: document.querySelectorAll("[class^='Controls__brainState']")[1]
+        .textContent,
     };
-
-    return info;
   },
 };
