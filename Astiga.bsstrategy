@@ -1,0 +1,33 @@
+//
+//  Astiga.js
+//  BeardedSpice
+//
+//  Created by Chloe Stars on 8/16/16.
+//  Slightly modified by Alexander Kellett on 2022-05-08.
+//  Copyright © 2016, 2022  GPL v3 http://www.gnu.org/licenses/gpl.html
+//
+BSStrategy = {
+  version:1,
+  displayName:"Astiga",
+  accepts: {
+    method: "predicateOnTab",
+    format:"%K LIKE[c] '*play.asti.ga*'",
+    args: ["URL"]
+  },
+  isPlaying: function () {return !(document.querySelector('audio').paused);},
+  toggle: function () {
+    var theAudio = document.getElementsByTagName("audio")[0];
+    if (theAudio.paused) { theAudio.play(); }
+    else { theAudio.pause() }
+  },
+  next: function () {},
+  favorite: function () {},
+  previous: function () {},
+  pause: function () {document.getElementsByTagName("audio")[0].pause();},
+  trackInfo: function () {
+    return {
+      'track': document.getElementsByClassName("song-title")[0].textContent,
+      'album': document.getElementsByClassName("song-album")[0].textContent
+    }
+  }
+}
